@@ -54,6 +54,7 @@ class BilimUp(App):
         except Exception: return error_view(traceback.format_exc())
     def _build(s):
         Window.clearcolor = BG
+        s.pwfile = os.path.join(s.user_data_dir, 'admin_first_password.txt')
         s.db = DB(); s.auth = Auth(s.db); s.qs = QuestionService(BASE, s.db)
         s.tr, s.subjects, s.dirs = load('translations.json'), load('subjects.json'), load('directions.json')
         s.cfg = load('config.json'); s.user, s.lang = None, 'kk'
@@ -63,7 +64,7 @@ class BilimUp(App):
                          ('calc', CalculatorScreen), ('periodic', PeriodicScreen), ('formulas', FormulasScreen), ('mistakes', MistakesScreen)):
             s.sm.add_widget(cls(name=sid))
         s.nav = BottomNav(s); root.add_widget(s.sm); root.add_widget(s.nav); s.nav.show(False)
-        s.pwfile = os.path.join(s.user_data_dir, 'admin_first_password.txt'); pw = s.auth.first_run_password()
+        pw = s.auth.first_run_password()
         if pw: open(s.pwfile, 'w').write(pw)
         elif os.path.exists(s.pwfile): os.remove(s.pwfile)
         s.sm.get_screen('login').refresh()
