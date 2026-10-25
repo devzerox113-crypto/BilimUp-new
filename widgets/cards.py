@@ -70,7 +70,8 @@ def badge(text, col, size=46):
     L.bind(pos=lambda i, v: setattr(e, 'pos', v), size=lambda i, v: setattr(e, 'size', v)); return L
 
 def lbl(text, size=15, color=(1, 1, 1, 1), bold=False, **kw):
-    L = Label(text=str(text), font_size=dp(size), color=color, bold=bold, size_hint_y=None, halign='left', valign='middle', **kw)
+    kw.setdefault('halign', 'left')
+    L = Label(text=str(text), font_size=dp(size), color=color, bold=bold, size_hint_y=None, valign='middle', **kw)
     L.bind(width=lambda i, w: setattr(i, 'text_size', (w, None)), texture_size=lambda i, t: setattr(i, 'height', t[1] + dp(6)))
     return L
 
